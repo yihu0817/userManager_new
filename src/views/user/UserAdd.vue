@@ -1,88 +1,110 @@
 <template>
   <div>
-    <form name="formadd" @submit.prevent="userAdd" method="post">
-      <table>
-        <input type="hidden" v-model="uid">
-        <tr bgcolor="#f5f5f5">
-          <td>
-            <div>
-              <font>*</font> 姓名:
-            </div>
-          </td>
-          <td>
-            <input id="clientname" type="text" name="name"  v-model="username" size="30">
-          </td>
-        </tr>
-        <tr bgcolor="#f0f0f0">
-          <td>
-            <div>
-              <font>*</font> 密码:
-            </div>
-          </td>
-          <td>
-            <input id="password" type="password" name="password"  v-model="password" size="30">
-          </td>
-        </tr>
-         
-        <tr bgcolor="#f5f5f5">
-          <td></td>
-          <td colspan="2">
-            <input type="submit" value="提交">
-            <input type="reset" value="重置">
-          </td>
-        </tr>
-          
-      </table>
-        <div> {{message}}</div>
-    </form>
+    <!-- <form name="formadd" @submit.prevent="userAdd" method="post" enctype="multipart/form-data"> -->
+    <table>
+      <input type="hidden" v-model="uid">
+      <tr bgcolor="#f5f5f5">
+        <td>
+          <div>
+            <font>*</font> 姓名:
+          </div>
+        </td>
+        <td>
+          <input id="clientname" type="text"  v-model="username" size="30">
+        </td>
+      </tr>
+      <tr bgcolor="#f0f0f0">
+        <td>
+          <div>
+            <font>*</font> 密码:
+          </div>
+        </td>
+        <td>
+          <input id="password" type="password" v-model="password" size="30">
+        </td>
+      </tr>
+      <tr bgcolor="#f5f5f5">
+        <td>
+          <div>头像:</div>
+        </td>
+        <td>
+          <input id="header" type="file"  @change="changeFile($event)">
+        </td>
+      </tr>
+
+      <tr bgcolor="#f5f5f5">
+        <td></td>
+        <td colspan="2">
+          <button @click="userAdd">提交</button>
+        </td>
+      </tr>
+    </table>
+    <div>{{message}}</div>
+    <!-- </form> -->
   </div>
 </template>
 <script>
 export default {
-    data(){
-        return{
-            uid:'',
-            username:'',
-            password:'',
-            message: '',
-        }
+  data() {
+    return {
+      uid: "",
+      username: "",
+      password: "",
+      message: "",
+      file: ""
+    };
+  },
+  methods: {
+    changeFile() {
+      let file = event.target.files[0];
+      this.file = file;
     },
-    methods:{
-        userAdd(){
-            const that = this;
-            that.$axios.post('http://192.168.35.114:8089/api/add',{username:this.username,psw:this.password}).then( response => {
-                if(response.data.resultCode === 1){
-                     that.message = '添加用户成功!';
-                       this.$router.push({name:'UserList'});
-                }else{
-                     that.message = '添加用户失败!';
-                }
-            }).catch( error => {
-                console.error(error);
-            });
-        }
+    userAdd() {
+      let formData = new FormData(); // 创建Form表单对象
+      formData.append("username", this.username);  // 向表单对象添加提交项,名为username,值为this.username
+      formData.append("psw", this.password);
+      formData.append("fileHeader",this.file);
+
+      // 文件上传 Content-Type": "multipart/form-data
+      let config = {
+        headers: { "Content-Type": "multipart/form-data" }
+      };
+
+      this.$axios
+        .post("http://192.168.35.114:8089/api/add",formData,config )
+        .then(response => {
+          if (response.data.resultCode === 1) {
+            this.message = "添加用户成功!";
+            this.$router.push({ name: "UserList" });
+          } else {
+            this.message = "添加用户失败!";
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
-}
+  }
+};
 </script>
 
 <style scoped>
-  table {
-    background-color: #CCCCCC;
-    border: 1px;
-    width: 100%;
-  }
+table {
+  background-color: #cccccc;
+  border: 1px;
+  width: 100%;
+}
 
-  table tr {
-    height: 20px;
-    line-height: 30px;
-  }
+table tr {
+  height: 20px;
+  line-height: 30px;
+}
 
-  table tr div {
-    text-align: right;
-  }
+table tr div {
+  text-align: right;
+}
 
-  td font {
-    color: red;
-  }
-
+td font {
+  color: red;
+}
 </style>

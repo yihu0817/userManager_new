@@ -9,9 +9,13 @@
       </tr>
 
       <tr v-for="(user,index) in userLists" :key="index">
-        <td>
-          <img src="../../assets/images/y.jpg" width="80px" height="80px">
+        <td v-if="user.headerimg">
+          <img :src="'http://192.168.35.114:8089/'+user.headerimg" width="80px" height="80px" >
         </td>
+        <td v-else>
+           <img src="../../assets/images/y.jpg" width="80px" height="80px">
+        </td>
+
         <td>{{user.username}}</td>
         <td>{{user.password}}</td>
         <td>
