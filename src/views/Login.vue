@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-
+import {RequestLogin} from '../api/api.js'
 export default {
     data(){
       return{
@@ -66,15 +66,13 @@ export default {
     },
     methods:{
       login(){
-         let that = this;
-         this.$axios.post('http://192.168.35.114:8089/api/login',{username:this.username,password:this.password}).then(function(response){
-           console.log(response.data);
-           if(response.data.resultCode === 1){
-             that.$router.push({name:'Main',params:{'username':that.username}});
-           }else{
-             that.error = response.data.resultInfo;
-           }
-         });
+          RequestLogin({username:this.username,password:this.password}).then( data => {
+             if(data.resultCode === 1){
+               this.$router.push({name:'Main',params:{'username':this.username}});
+             }else{
+               this.error = response.data.resultInfo;
+             }
+          });
       }
     }
 }

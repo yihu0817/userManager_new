@@ -10,7 +10,7 @@
           </div>
         </td>
         <td>
-          <input id="clientname" type="text"  v-model="username" size="30">
+          <input type="text" v-model="username">
         </td>
       </tr>
       <tr bgcolor="#f0f0f0">
@@ -20,7 +20,7 @@
           </div>
         </td>
         <td>
-          <input id="password" type="password" v-model="password" size="30">
+          <input type="password" v-model="password">
         </td>
       </tr>
       <tr bgcolor="#f5f5f5">
@@ -28,7 +28,7 @@
           <div>头像:</div>
         </td>
         <td>
-          <input id="header" type="file"  @change="changeFile($event)">
+          <input type="file" @change="changeFile($event)">
         </td>
       </tr>
 
@@ -44,6 +44,7 @@
   </div>
 </template>
 <script>
+import { RequestUserAdd } from "../../api/api.js";
 export default {
   data() {
     return {
@@ -61,27 +62,25 @@ export default {
     },
     userAdd() {
       let formData = new FormData(); // 创建Form表单对象
-      formData.append("username", this.username);  // 向表单对象添加提交项,名为username,值为this.username
+      formData.append("username", this.username); // 向表单对象添加提交项,名为username,值为this.username
       formData.append("psw", this.password);
-      formData.append("fileHeader",this.file);
+      formData.append("fileHeader", this.file);
 
       // 文件上传 Content-Type": "multipart/form-data
       let config = {
         headers: { "Content-Type": "multipart/form-data" }
       };
 
-      this.$axios
-        .post("http://192.168.35.114:8089/api/add",formData,config )
-        .then(response => {
-          if (response.data.resultCode === 1) {
+      RequestUserAdd(formData, config)
+        .then(data => {
+          if (data.resultCode === 1) {
             this.message = "添加用户成功!";
             this.$router.push({ name: "UserList" });
           } else {
             this.message = "添加用户失败!";
           }
-        })
-        .catch(error => {
-          console.error(error);
+        }).catch(error => {
+          console.log(error);
         });
     }
   }

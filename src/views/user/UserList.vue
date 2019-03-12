@@ -10,10 +10,10 @@
 
       <tr v-for="(user,index) in userLists" :key="index">
         <td v-if="user.headerimg">
-          <img :src="'http://192.168.35.114:8089/'+user.headerimg" width="80px" height="80px" >
+          <img :src="'http://192.168.35.114:8089/'+user.headerimg" width="80px" height="80px">
         </td>
         <td v-else>
-           <img src="../../assets/images/y.jpg" width="80px" height="80px">
+          <img src="../../assets/images/y.jpg" width="80px" height="80px">
         </td>
 
         <td>{{user.username}}</td>
@@ -29,6 +29,7 @@
   </div>
 </template>
 <script>
+import { RequestUserList, RequestUserDelete } from "../../api/api.js";
 export default {
   created() {
     console.log("create>>>>");
@@ -44,26 +45,20 @@ export default {
   },
   methods: {
     userList() {
-      const that = this;
-      this.$axios.get("http://192.168.35.114:8089/api/list").then(response => {
-        console.log(response.data);
-        if (response.data.resultCode === 1) {
-          this.userLists = response.data.resultInfo;
+      RequestUserList().then(data => {
+        if (data.resultCode === 1) {
+          this.userLists = data.resultInfo;
         }
       });
     },
     userDelete() {
       let uid = this.$route.query.uid;
-      //  console.log(`uid = ${uid}`);
-      // 箭头函数中this
-      const that = this;
-      this.$axios
-        .get("http://192.168.35.114:8089/api/delete", { params: { uid: uid } })
-        .then(response => {
-          if (response.data.resultCode === 1) {
-            that.userList();
-          }
-        });
+      const params = { params: { uid: uid } };
+      RequestUserDelete(params).then(data => {
+        if (data.resultCode === 1) {
+          this.userList();
+        }
+      });
     }
   }
 };
