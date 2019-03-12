@@ -44,7 +44,7 @@
   </div>
 </template>
 <script>
-import { RequestUserAdd } from "../../api/api.js";
+import { RequestUserAdd } from "api/api.js";
 export default {
   data() {
     return {

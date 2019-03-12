@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-import {RequestLogin} from '../api/api.js'
+import {RequestLogin} from 'api/api.js'
 export default {
     data(){
       return{

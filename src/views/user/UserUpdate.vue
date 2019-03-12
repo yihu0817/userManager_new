@@ -37,7 +37,7 @@
   </div>
 </template>
 <script>
-import { RequestUserFind, RequestUserUpdate } from "../../api/api";
+import { RequestUserFind, RequestUserUpdate } from "api/api";
 export default {
   data() {
     return {

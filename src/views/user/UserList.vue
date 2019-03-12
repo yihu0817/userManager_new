@@ -29,7 +29,7 @@
   </div>
 </template>
 <script>
-import { RequestUserList, RequestUserDelete } from "../../api/api.js";
+import { RequestUserList, RequestUserDelete } from "api/api.js";
 export default {
   created() {
     console.log("create>>>>");

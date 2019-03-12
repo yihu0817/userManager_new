@@ -56,3 +56,40 @@
         </td>
       </tr>
     ```
+
+## axios封装
+```javascript
+import axios from 'axios';
+
+let baseUrl = 'http://192.168.35.114:8089';
+
+// export const RequestLogin = function (params) {
+//     return axios.post(`${baseUrl}/api/login`, params).then(response => {
+//         return response.data;
+//     });
+// } 
+/**登录*/
+export const RequestLogin = params => axios.post(`${baseUrl}/api/login`, params).then( res => res.data);
+
+```
+
+## 组件components
+```html
+ <div>
+		<!-- 头部区域 -->
+    <Header></Header>
+
+    <!-- 菜单区域--->
+    <nav-menu></nav-menu>
+```
+
+## 别名
+build目录下webpack.base.conf.js
+```javascript
+  alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': resolve('src'),
+      'static':resolve('static'),
+      'api': resolve('src/api'),
+    }
+```
