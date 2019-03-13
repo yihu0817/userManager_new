@@ -68,6 +68,7 @@ export default {
       login(){
           RequestLogin({username:this.username,password:this.password}).then( data => {
              if(data.resultCode === 1){
+               sessionStorage.setItem('user',this.username); // 保存登录用户信息
                this.$router.push({name:'Main',params:{'username':this.username}});
              }else{
                this.error = response.data.resultInfo;

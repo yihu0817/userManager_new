@@ -13,6 +13,7 @@ Vue.component('Header', Header); // 全局注册组件 <nav-menu></nav-menu>
 Vue.config.productionTip = false;
 // Vue.prototype.apiBaseUrl = 'http://192.168.35.114:8089';
 
+
 /* eslint-disable no-new */
  new Vue({
   el: '#app',
