@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let baseUrl = 'http://192.168.35.114:8089';
+export let baseUrl = 'http://192.168.35.114:8089';
 
 // export const RequestLogin = function (params) {
 //     return axios.post(`${baseUrl}/api/login`, params).then(response => {
@@ -19,4 +19,5 @@ export const RequestUserAdd = (pararms, config) => axios.post(`${baseUrl}/api/ad
 export const RequestUserFind = params => axios.get(`${baseUrl}/api/find`,params).then( res => res.data);
 /**修改用户 */
 export const RequestUserUpdate = params => axios.post(`${baseUrl}/api/update`,params).then( res => res.data);
+
 

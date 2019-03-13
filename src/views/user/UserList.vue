@@ -9,8 +9,10 @@
       </tr>
 
       <tr v-for="(user,index) in userLists" :key="index">
+        
         <td v-if="user.headerimg">
-          <img :src="'http://192.168.35.114:8089/'+user.headerimg" width="80px" height="80px">
+          <!-- <img :src="'http://192.168.35.114:8089/'+user.headerimg" width="80px" height="80px"> -->
+          <img :src="BASEURL + user.headerimg" width="80px" height="80px">
         </td>
         <td v-else>
           <img src="../../assets/images/y.jpg" width="80px" height="80px">
@@ -29,7 +31,7 @@
   </div>
 </template>
 <script>
-import { RequestUserList, RequestUserDelete } from "api/api.js";
+import { RequestUserList, RequestUserDelete,baseUrl } from "api/api.js";
 export default {
   created() {
     console.log("create>>>>");
@@ -40,7 +42,8 @@ export default {
   },
   data() {
     return {
-      userLists: []
+      userLists: [],
+      BASEURL: baseUrl,
     };
   },
   methods: {

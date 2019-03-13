@@ -68,9 +68,36 @@ let baseUrl = 'http://192.168.35.114:8089';
 //         return response.data;
 //     });
 // } 
-/**登录*/
-export const RequestLogin = params => axios.post(`${baseUrl}/api/login`, params).then( res => res.data);
+/**登录*/ 
+export const RequestLogin = params =>  axios.post(`${baseUrl}/api/login`, params).then( res => res.data);
 
+
+// e6模块规范 暴露模块对象和引入模块对象方式
+demo.js
+const foo = function(a){
+   a++;
+   return a;
+}
+export {foo}
+export default foo;
+
+main.js
+import {foo} form 'demo.js'
+
+const a = foo();
+
+
+// 箭头函数
+const foo = (a) => {
+   return a++;
+}
+const foo = a => a++;
+
+let promise = axios.post(`${baseUrl}/api/login`, params);
+promise.then(res => res.data);
+promise.catch();
+
+axios.post(`${baseUrl}/api/login`, params).then( res => res.data);
 ```
 
 ## 组件components
