@@ -6,13 +6,13 @@ import UserList from '@/views/user/UserList'
 import UserAdd from '@/views/user/UserAdd'
 import UserUpdate from '@/views/user/UserUpdate'
 import store from '../store/store'
+import jwt from 'jsonwebtoken'
 
 Vue.use(Router)
 
-const router =  new Router({
+const router = new Router({
   mode: 'history',
-  routes: [
-    {
+  routes: [{
       path: '/',
       redirect: '/login'
     },
@@ -25,8 +25,7 @@ const router =  new Router({
       path: '/main',
       name: 'Main',
       component: Main,
-      children: [
-        {
+      children: [{
           path: 'user_list',
           name: 'UserList',
           component: UserList
@@ -38,7 +37,7 @@ const router =  new Router({
         },
         {
           path: 'user_update',
-          name:'UserUpdate',
+          name: 'UserUpdate',
           component: UserUpdate
         }
       ]
@@ -47,28 +46,31 @@ const router =  new Router({
 })
 
 // 有些页面是不需要登录验证
-router.beforeEach((to,from,next) => {
-    console.log(to.path);
-    
-    // '/' 和 登录页 直接放行
-    if(to.path === '/login' || to.path === '/' ){
-      next(); 
-      return;
-    }
+router.beforeEach((to, from, next) => {
 
-    //如果用户已经登录放行
-    // const user = sessionStorage.getItem('user');
-    const user = store.getters.getUser;
-    console.log(`beforeEach user = ${user}`);
+  // '/' 和 登录页 直接放行
+  if (to.path === '/login' || to.path === '/') {
+    next();
+    return;
+  }
 
-    if(user != null && user != ''){
-      next(); 
-      return;
-    }
+  //如果用户已经登录放行
+  // const user = sessionStorage.getItem('user');
+  const user = store.getters.getUser;
+  console.log(`beforeEach user = ${user}`);
 
-    next({ path: '/login'});
+  if (user != null && user != '') {
+    next();
+    return;
+  }
+
+  next({
+    path: '/login'
+  });
 
 });
+
+
 
 
 export default router;

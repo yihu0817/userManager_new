@@ -25,7 +25,7 @@ export default {
   },
   mounted(){
     //  this.user = sessionStorage.getItem('user');
-    this.user = this.$store.getters.getUser;
+    // this.user = this.$store.getters.getUser;
   },
   methods:{
     logout(){

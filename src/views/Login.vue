@@ -68,8 +68,8 @@ export default {
       login(){
           RequestLogin({username:this.username,password:this.password}).then( data => {
              if(data.resultCode === 1){
-              //  sessionStorage.setItem('user',this.username); // 保存登录用户信息
-              this.$store.dispatch('saveUser',this.username);
+              // console.log(`login data.token = ${data.token}`);
+              this.$store.dispatch('saveUser',{username: this.username,token: data.token});
 
                this.$router.push({name:'Main',params:{'username':this.username}});
              }else{
