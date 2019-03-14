@@ -5,6 +5,7 @@ import Main from '@/views/Main'
 import UserList from '@/views/user/UserList'
 import UserAdd from '@/views/user/UserAdd'
 import UserUpdate from '@/views/user/UserUpdate'
+import store from '../store/store'
 
 Vue.use(Router)
 
@@ -56,8 +57,11 @@ router.beforeEach((to,from,next) => {
     }
 
     //如果用户已经登录放行
-    let user = sessionStorage.getItem('user');
-    if(user != null){
+    // const user = sessionStorage.getItem('user');
+    const user = store.getters.getUser;
+    console.log(`beforeEach user = ${user}`);
+
+    if(user != null && user != ''){
       next(); 
       return;
     }

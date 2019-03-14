@@ -24,11 +24,13 @@ export default {
     }
   },
   mounted(){
-     this.user = sessionStorage.getItem('user');
+    //  this.user = sessionStorage.getItem('user');
+    this.user = this.$store.getters.getUser;
   },
   methods:{
     logout(){
-      sessionStorage.removeItem('user');
+      // sessionStorage.removeItem('user');
+      this.$store.dispatch('clearUser');
       this.$router.push({name:'Login'});
     }
   }

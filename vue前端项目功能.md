@@ -122,6 +122,32 @@ build目录下webpack.base.conf.js
 ```
 
 
+## 复习 面向对象知识
+```javascript
+ function Person(name,age){
+   this.name = name;
+  this.age = age;
+   // this.say = function(){
+   //   console.log('say hello');
+   // }
+ }
+
+
+ Person.prototype.say = function(){
+   console.log('say hello');
+ }
+
+ var zhangs = new Person('张三',23);
+ var lishi = new Person('李四',23);
+
+ zhangs.say();
+ lishi.say();
+
+ 每个构造函数都有一个原型对象，在原型对象上定义公有属性方法，在构造函数中定义私有属性方法
+```
+
+
+
 ## 统一登录验证
 当用户没有登录时直接访问未授权页面是不允许的.需要进行登录之后才能访问
 
@@ -129,4 +155,6 @@ build目录下webpack.base.conf.js
 * 在访问需要登录页面进行判断( 为了不在每个需要授权页面都写判断代码，在某个地方进行统一登录验证。)
 * 退出登录时清除登录状态
 
-vue项目  sessionStorage + 全局前置守卫
+vue项目  
+ - 1.sessionStorage + 全局前置守卫
+ - 2. vuex + 全局前置守卫
