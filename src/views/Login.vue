@@ -73,8 +73,10 @@ export default {
 
                this.$router.push({name:'Main',params:{'username':this.username}});
              }else{
-               this.error = response.data.resultInfo;
+               this.error = data.resultInfo;
              }
+          }).catch( error => {
+            console.error(error);
           });
       }
     }

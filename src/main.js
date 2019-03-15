@@ -18,7 +18,7 @@ Vue.config.productionTip = false;
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
-    console.log(' http request 拦截器>>>>');
+    // console.log(' http request 拦截器>>>>');
     const user = store.getters.getUser;
     if (user) { // 判断是否存在token，如果存在的话，则每个http header都加上token
       config.headers.Authorization = `token ${user.token}}`;
@@ -33,7 +33,7 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
-    console.log(' http response 拦截器 <<<<< ');
+    // console.log(' http response 拦截器 <<<<< ');
     return response;
   },
   error => {

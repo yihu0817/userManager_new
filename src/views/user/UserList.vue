@@ -34,11 +34,11 @@
 import { RequestUserList, RequestUserDelete,baseUrl } from "api/api.js";
 export default {
   created() {
-    console.log("create>>>>");
+    // console.log("create>>>>");
     this.userList();
   },
   mounted() {
-    console.log("mounted>>>>");
+    // console.log("mounted>>>>");
   },
   data() {
     return {

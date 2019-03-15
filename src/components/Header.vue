@@ -11,7 +11,7 @@
     </div>
 
     <div style="color:lightcyan;font-size:14px; float: right; margin-right: 40px; margin-top: 20px">
-      当前用户:{{user}}
+      当前用户:{{user.username}}
       <span style="font-size:14px;"></span>
     </div>
   </div>
@@ -25,7 +25,7 @@ export default {
   },
   mounted(){
     //  this.user = sessionStorage.getItem('user');
-    // this.user = this.$store.getters.getUser;
+    this.user = this.$store.getters.getUser;
   },
   methods:{
     logout(){
