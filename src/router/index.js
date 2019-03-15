@@ -57,7 +57,7 @@ router.beforeEach((to, from, next) => {
   //如果用户已经登录放行
   // const user = sessionStorage.getItem('user');
   const user = store.getters.getUser;
-  console.log(`beforeEach user = ${user}`);
+  // console.log(`beforeEach user = ${user}`);
 
   if (user != null && user != '') {
     next();

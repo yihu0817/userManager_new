@@ -10,7 +10,6 @@ const mutations = {
   /**保存用户信息 */
   setUser(state, user) {
     state.user = user;
-
     sessionStorage.setItem('user', JSON.stringify(user));
 
   },

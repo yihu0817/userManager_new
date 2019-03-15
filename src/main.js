@@ -15,14 +15,13 @@ Vue.component('Header', Header); // 全局注册组件 <nav-menu></nav-menu>
 Vue.prototype.$store = store;
 Vue.config.productionTip = false;
 
-
-
-
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
-    if (store.getters.getUser) { // 判断是否存在token，如果存在的话，则每个http header都加上token
-      // config.headers.Authorization = `token ${store.getters.getUser.token}}`;
+    console.log(' http request 拦截器>>>>');
+    const user = store.getters.getUser;
+    if (user) { // 判断是否存在token，如果存在的话，则每个http header都加上token
+      config.headers.Authorization = `token ${user.token}}`;
     }
     return config;
   },
@@ -31,15 +30,35 @@ axios.interceptors.request.use(
   });
 
 
+// http response 拦截器
+axios.interceptors.response.use(
+  response => {
+    console.log(' http response 拦截器 <<<<< ');
+    return response;
+  },
+  error => {
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          // 返回 401 清除token信息并跳转到登录页面
+          store.commit(types.LOGOUT);
+          router.replace({
+            path: 'login',
+            query: { redirect: router.currentRoute.fullPath }
+          })
+      }
+    }
+    return Promise.reject(error.response.data)   // 返回接口返回的错误信息
+  });
 
-// 添加一个响应拦截器
-axios.interceptors.response.use(function (response) {
-  // Do something with response data
-  return response;
-}, function (error) {
-  // Do something with response error
-  return Promise.reject(error);
-});
+// // 添加一个响应拦截器
+// axios.interceptors.response.use(function (response) {
+//   // Do something with response data
+//   return response;
+// }, function (error) {
+//   // Do something with response error
+//   return Promise.reject(error);
+// });
 
 /* eslint-disable no-new */
 new Vue({
